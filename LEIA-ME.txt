@@ -46,7 +46,26 @@ ATUALIZAR O ROTEIRO
   Na próxima vez que abrirem o app com internet, aparece o aviso
   "Nova versão disponível" com o botão Atualizar.
 
+DIÁRIO DE BORDO
+  No topo do app tem "Diário de:" — cada um toca no próprio nome
+  (Jackson / Jo / Marlon / Bia). Fica gravado, escolhe só uma vez.
+
+  Em cada dia, no fim da página, tem o bloco do diário:
+    · estrelas para avaliar o dia
+    · o dia em suas palavras
+    · momento favorito
+    · clipe da Osmo 360 (ex: 0037) — facilita achar na edição depois
+    · nota de áudio gravada
+
+  Escreve a qualquer hora, inclusive sem sinal. Salva sozinho ao
+  sair do campo, mas o botão "Salvar meu relato" dá a confirmação.
+
+  No fim da viagem: botão "Diário ↗" no topo > Copiar > cola no
+  grupo. Cada aparelho exporta os relatos que tem. Juntando os
+  quatro, você tem o diário completo dos 15 dias.
+
 DETALHES
-  · O checklist é individual de cada celular e não sincroniza.
+  · O checklist e o diário são individuais de cada celular e não
+    sincronizam entre os aparelhos — por isso a exportação no fim.
   · Atualizar o roteiro NÃO apaga o que já foi marcado.
   · O selo "offline" aparece ao lado do título quando está sem sinal.
