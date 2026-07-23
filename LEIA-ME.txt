@@ -1,0 +1,52 @@
+ROUTE 66 · FAMÍLIA VOLTAS · APP DO ROTEIRO
+==========================================
+
+O QUE TEM NESTA PASTA
+  index.html            o app
+  sw.js                 faz funcionar offline
+  manifest.webmanifest  ícone e tela cheia
+  icon-*.png            ícones do app
+
+PUBLICAR (uma vez só)
+  Suba TODOS os arquivos desta pasta, juntos, para o GitHub Pages
+  ou Cloudflare Pages. Precisa ser HTTPS — é exigência do navegador
+  para o modo offline funcionar.
+
+  GitHub Pages:
+    1. github.com > New repository > nome: roteiro-route66 > Public
+    2. Add file > Upload files > arraste TODOS os arquivos > Commit
+    3. Settings > Pages > Source: "Deploy from a branch" > main > / (root) > Save
+    4. Aguarde ~2 min. O link aparece na mesma tela:
+       https://SEUUSUARIO.github.io/roteiro-route66/
+
+MANDAR PARA A FAMÍLIA
+  Envie o link no grupo com estas instruções:
+
+  ---
+  Roteiro Route 66 no celular:
+  [seu link]
+
+  Abram uma vez em casa, no wi-fi, e instalem:
+  iPhone (Safari): compartilhar > "Adicionar à Tela de Início"
+  Android (Chrome): menu ... > "Instalar app"
+
+  Depois disso funciona sem internet. Cada um marca os itens do
+  próprio dia. O botão "Hoje" abre direto no dia certo na viagem.
+  ---
+
+ATUALIZAR O ROTEIRO
+  1. Edite a planilha no Google Sheets
+  2. Menu Roteiro > Gerar HTML
+  3. Baixe o arquivo do Drive
+  4. Renomeie para index.html e substitua no repositório
+  5. IMPORTANTE: abra sw.js e mude o número da versão na linha 3
+     (ex.: 'r66-v6.f9480779' vira 'r66-v7'). Sem isso os celulares
+     não percebem que mudou.
+
+  Na próxima vez que abrirem o app com internet, aparece o aviso
+  "Nova versão disponível" com o botão Atualizar.
+
+DETALHES
+  · O checklist é individual de cada celular e não sincroniza.
+  · Atualizar o roteiro NÃO apaga o que já foi marcado.
+  · O selo "offline" aparece ao lado do título quando está sem sinal.
