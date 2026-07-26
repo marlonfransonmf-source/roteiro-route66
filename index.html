@@ -292,6 +292,19 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .hero{position:relative;overflow:hidden}
 .heroart{position:absolute;left:0;right:0;bottom:0;width:100%;height:100%;pointer-events:none;z-index:0}
 .hero-top{position:relative;z-index:1}
+
+.sync-bar{display:flex;align-items:center;gap:.5rem;padding:.4rem .85rem;font-size:.66rem;color:var(--gray)}
+.sync-dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--gray);flex:0 0 auto}
+.sync-dot.ok{background:#3E7A3E}.sync-dot.wait{background:#C08A1E}.sync-dot.off{background:#B23A3A}
+.sync-bar button{margin-left:auto;border:1px solid var(--line);background:transparent;color:var(--c);
+  border-radius:999px;padding:.15rem .55rem;font-size:.62rem;font-weight:700;font-family:inherit;cursor:pointer}
+.setup{background:var(--read-bg);border:1px dashed var(--line);border-radius:.6rem;padding:.7rem .8rem;margin:.5rem .85rem}
+.setup p{margin:0 0 .5rem;font-size:.74rem;line-height:1.5}
+.setup input{width:100%;border:1px solid var(--line);border-radius:.45rem;background:var(--bg);color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;padding:.5rem;margin-bottom:.5rem}
+.setup button{width:100%;border:none;border-radius:.45rem;background:var(--c);color:#fff;padding:.55rem;
+  font-size:.78rem;font-weight:700;font-family:inherit;cursor:pointer}
+.di-other .sync-tag{font-size:.58rem;color:var(--gray);font-weight:400}
 </style>
 </head>
 <body>
@@ -301,7 +314,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
       <button class="toolbtn" id="tCofre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Cofre</span></button>
       <button class="toolbtn" id="tEmerg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Emergência</span></button>
     </div><div class="top"><div class="brand"><p>Route 66 · Oeste Americano · Set/2026</p><button class="tbtn" id="expBtn" aria-label="Exportar diário">Diário ↗</button><span class="offbadge" id="offbadge">offline</span><button class="tbtn" id="themeBtn" aria-label="Alternar tema"><span id="themeIcon">☾</span></button></div><div class="who" id="who"><span>Diário de:</span></div>
-<div class="daytabs" id="daytabs"><button class="daytab" style="--c:#2C3E50" data-day="1" aria-label="Dia 1">1</button><button class="daytab" style="--c:#2D6CB4" data-day="2" aria-label="Dia 2">2</button><button class="daytab" style="--c:#1AA6A6" data-day="3" aria-label="Dia 3">3</button><button class="daytab" style="--c:#B23A73" data-day="4" aria-label="Dia 4">4</button><button class="daytab" style="--c:#C0392B" data-day="5" aria-label="Dia 5">5</button><button class="daytab" style="--c:#D9720A" data-day="6" aria-label="Dia 6">6</button><button class="daytab" style="--c:#A5502D" data-day="7" aria-label="Dia 7">7</button><button class="daytab" style="--c:#3E7A3E" data-day="8" aria-label="Dia 8">8</button><button class="daytab" style="--c:#6B4C9A" data-day="9" aria-label="Dia 9">9</button><button class="daytab" style="--c:#D6217A" data-day="10" aria-label="Dia 10">10</button><button class="daytab" style="--c:#C08A1E" data-day="11" aria-label="Dia 11">11</button><button class="daytab" style="--c:#8B5E34" data-day="12" aria-label="Dia 12">12</button><button class="daytab" style="--c:#E85D75" data-day="13" aria-label="Dia 13">13</button><button class="daytab" style="--c:#1E88A8" data-day="14" aria-label="Dia 14">14</button><button class="daytab" style="--c:#2C3E50" data-day="15" aria-label="Dia 15">15</button></div></div>
+<div class="sync-bar" id="syncBar"><span class="sync-dot" id="syncDot"></span><span id="syncMsg">Diário local</span><button id="syncBtn">sincronizar</button></div><div class="daytabs" id="daytabs"><button class="daytab" style="--c:#2C3E50" data-day="1" aria-label="Dia 1">1</button><button class="daytab" style="--c:#2D6CB4" data-day="2" aria-label="Dia 2">2</button><button class="daytab" style="--c:#1AA6A6" data-day="3" aria-label="Dia 3">3</button><button class="daytab" style="--c:#B23A73" data-day="4" aria-label="Dia 4">4</button><button class="daytab" style="--c:#C0392B" data-day="5" aria-label="Dia 5">5</button><button class="daytab" style="--c:#D9720A" data-day="6" aria-label="Dia 6">6</button><button class="daytab" style="--c:#A5502D" data-day="7" aria-label="Dia 7">7</button><button class="daytab" style="--c:#3E7A3E" data-day="8" aria-label="Dia 8">8</button><button class="daytab" style="--c:#6B4C9A" data-day="9" aria-label="Dia 9">9</button><button class="daytab" style="--c:#D6217A" data-day="10" aria-label="Dia 10">10</button><button class="daytab" style="--c:#C08A1E" data-day="11" aria-label="Dia 11">11</button><button class="daytab" style="--c:#8B5E34" data-day="12" aria-label="Dia 12">12</button><button class="daytab" style="--c:#E85D75" data-day="13" aria-label="Dia 13">13</button><button class="daytab" style="--c:#1E88A8" data-day="14" aria-label="Dia 14">14</button><button class="daytab" style="--c:#2C3E50" data-day="15" aria-label="Dia 15">15</button></div></div>
 <section class="day" data-day="1" style="--c:#2C3E50;--cd:#18222C"><header class="hero"><svg class="heroart" viewBox="0 0 400 150" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="rgba(255,255,255,0.13)">
   <path d="M340,55 l-70,20 l-3,-9 l55,-22 l-40,-2 l-8,6 l-9,-2 l10,-16 l12,0 l6,10 l60,-8 c8,-1 12,3 12,7 c0,5 -8,8 -15,9 z"/>
   </g>
@@ -1065,6 +1078,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
         r.nota = (r.nota===v) ? 0 : v;
         r.quando=new Date().toISOString();
         salvar(); carregar(dia);
+        if(window.__enfileirar) window.__enfileirar(dia);
       };
     });
   });
@@ -1079,6 +1093,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
       });
       r.quando=new Date().toISOString();
       salvar(); carregar(dia);
+      if(window.__enfileirar) window.__enfileirar(dia);
       btn.textContent='Salvo ✓'; btn.classList.add('saved');
       setTimeout(function(){ btn.textContent='Salvar meu relato'; btn.classList.remove('saved'); },1800);
     };
@@ -1147,6 +1162,91 @@ body{margin:0;background:var(--bg);color:var(--ink);
         if(x && (x.texto||x.momento||x.nota)) n++; }); c.textContent = n ? (n+' de 4') : '—'; }
     });
   });
+
+
+  /* ---------- SINCRONIZACAO COM A PLANILHA ---------- */
+  var UKEY='r66syncurl', QKEY='r66fila';
+  var syncUrl=null, fila=[];
+  try{ syncUrl=localStorage.getItem(UKEY)||null; }catch(e){}
+  try{ fila=JSON.parse(localStorage.getItem(QKEY)||'[]'); }catch(e){ fila=[]; }
+  function salvarFila(){ try{ localStorage.setItem(QKEY,JSON.stringify(fila)); }catch(e){} }
+
+  var dot=document.getElementById('syncDot'), msg=document.getElementById('syncMsg');
+  function status(cls,txt){ dot.className='sync-dot '+cls; msg.textContent=txt; }
+
+  function setupUrl(){
+    var wrap=document.getElementById('who').parentNode;
+    var box=document.createElement('div'); box.className='setup';
+    box.innerHTML='<p><b>Diário compartilhado.</b> Cole aqui o link do Apps Script (termina em /exec) '+
+      'que o Marlon vai gerar. Depois disso, os relatos da família aparecem para todos.</p>'+
+      '<input id="setupInput" placeholder="https://script.google.com/.../exec">'+
+      '<button id="setupSave">Ativar diário compartilhado</button>';
+    document.getElementById('syncBar').after(box);
+    document.getElementById('setupSave').onclick=function(){
+      var u=document.getElementById('setupInput').value.trim();
+      if(u.indexOf('/exec')<0){ toast('Link precisa terminar em /exec'); return; }
+      syncUrl=u; try{ localStorage.setItem(UKEY,u); }catch(e){}
+      box.remove(); status('wait','Conectando...'); baixar();
+    };
+  }
+
+  document.getElementById('syncBtn').onclick=function(){
+    if(!syncUrl){ setupUrl(); return; }
+    enviarFila(); baixar();
+  };
+
+  /* baixa todos os relatos e mescla no diario local */
+  function baixar(){
+    if(!syncUrl){ status('off','Toque para configurar'); return; }
+    if(!navigator.onLine){ status('off','Sem sinal — salvo local'); return; }
+    status('wait','Buscando...');
+    fetch(syncUrl).then(function(r){ return r.json(); }).then(function(res){
+      if(!res.ok) throw new Error(res.erro||'erro');
+      res.relatos.forEach(function(x){
+        diario[x.pessoa]=diario[x.pessoa]||{};
+        var loc=diario[x.pessoa][String(x.dia)];
+        /* o remoto vence se for mais novo OU se nao existir local */
+        if(!loc || !loc.quando || (x.atualizado && x.atualizado>loc.quando)){
+          diario[x.pessoa][String(x.dia)]={texto:x.texto,momento:x.momento,osmo:x.osmo,
+            audio:x.audio,nota:x.nota,quando:x.atualizado||''};
+        }
+      });
+      salvar(); carregarTudo();
+      status('ok', fila.length? ('Sincronizado · '+fila.length+' na fila') : 'Sincronizado');
+    }).catch(function(){ status('off','Falha — salvo local'); });
+  }
+
+  /* envia a fila de pendencias, um a um */
+  function enviarFila(){
+    if(!syncUrl || !navigator.onLine || !fila.length) return;
+    var item=fila[0];
+    fetch(syncUrl,{method:'POST',body:JSON.stringify(item)}).then(function(r){ return r.json(); })
+      .then(function(res){
+        if(res.ok){ fila.shift(); salvarFila();
+          if(fila.length) enviarFila(); else { status('ok','Sincronizado'); baixar(); }
+        }
+      }).catch(function(){ status('off','Sem sinal — '+fila.length+' na fila'); });
+  }
+
+  /* chamado quando alguem salva: poe na fila e tenta enviar */
+  window.__enfileirar=function(dia){
+    if(!quem) return;
+    var r=diario[quem][String(dia)]; if(!r) return;
+    /* remove item antigo da mesma pessoa+dia na fila */
+    fila=fila.filter(function(f){ return !(f.pessoa===quem && String(f.dia)===String(dia)); });
+    fila.push({dia:Number(dia),pessoa:quem,texto:r.texto,momento:r.momento,
+               osmo:r.osmo,audio:r.audio,nota:r.nota});
+    salvarFila();
+    if(syncUrl && navigator.onLine){ enviarFila(); }
+    else { status(syncUrl?'wait':'off', syncUrl? ('Sem sinal — '+fila.length+' na fila'):'Toque para configurar'); }
+  };
+
+  window.addEventListener('online', function(){ if(syncUrl){ enviarFila(); baixar(); } });
+
+  /* estado inicial */
+  if(syncUrl){ status('wait','Conectando...'); baixar();
+    setInterval(function(){ if(navigator.onLine){ enviarFila(); baixar(); } }, 90000);
+  } else { status('off','Toque para configurar'); }
 
   pintarQuem(); carregarTudo();
 })();

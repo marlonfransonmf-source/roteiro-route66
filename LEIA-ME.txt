@@ -87,6 +87,27 @@ FUNDOS ILUSTRADOS
   píer e as palmeiras em LA, avião nos dias de voo. Tudo desenhado
   (SVG), pesa quase nada e funciona offline.
 
+
+DIÁRIO COMPARTILHADO (todos veem tudo)
+  Agora o diário pode ser compartilhado: cada um escreve no próprio
+  celular e todos veem os relatos uns dos outros.
+
+  ATIVAR (só o Marlon faz, uma vez):
+  1. Abra sua planilha no Google Sheets > Extensões > Apps Script
+  2. Cole o arquivo "diario_backend.gs" num arquivo novo > Salve
+  3. Implantar > Nova implantação > tipo "App da Web"
+     - Executar como: Eu mesmo
+     - Quem tem acesso: QUALQUER PESSOA
+  4. Copie o link gerado (termina em /exec)
+  5. No app, toque em "sincronizar" no topo e cole esse link
+  6. Mande o MESMO link para a família colar no app deles
+
+  Como funciona:
+  - Escreve com sinal > sobe na hora, todos veem ao sincronizar
+  - Escreve sem sinal > fica "na fila", sobe sozinho quando pegar rede
+  - O ponto colorido no topo mostra o estado (verde = sincronizado)
+  - Sem configurar o link, o diário funciona só no celular (como antes)
+
 DETALHES
   · O checklist e o diário são individuais de cada celular e não
     sincronizam entre os aparelhos — por isso a exportação no fim.
