@@ -135,14 +135,6 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .toast.on{opacity:1;transform:translateX(-50%)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.upd{position:fixed;left:0;right:0;bottom:calc(4.2rem + var(--safe));z-index:60;
-  max-width:520px;margin:0 auto;padding:0 .85rem;transform:translateY(140%);transition:transform .28s}
-.upd.on{transform:none}
-.upd-in{background:var(--ink);color:var(--bg);border-radius:.7rem;padding:.7rem .85rem;
-  display:flex;align-items:center;gap:.7rem;box-shadow:0 6px 24px rgba(0,0,0,.28)}
-.upd-in p{margin:0;font-size:.8rem;flex:1;line-height:1.35}
-.upd-in button{border:none;border-radius:.45rem;padding:.45rem .8rem;font-size:.78rem;
-  font-weight:700;font-family:inherit;background:var(--bg);color:var(--ink);cursor:pointer;flex:0 0 auto}
 .offbadge{font-size:.6rem;padding:.1rem .4rem;border-radius:99px;border:1px solid var(--line);
   color:var(--gray);margin-left:.4rem;display:none}
 .offbadge.on{display:inline-block}
@@ -815,8 +807,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
     </div></div></section>
 </div>
 <nav class="nav"><button id="prev">‹ Anterior</button><button class="now" id="today">Hoje</button><button id="next">Próximo ›</button></nav>
-<div class="upd" id="upd"><div class="upd-in">
-<p>Nova versão do roteiro disponível.</p><button id="updBtn">Atualizar</button></div></div>
+
 <div class="exp" id="exp"><div class="exp-in">
       <button class="exp-x" id="expClose" style="float:right">×</button>
       <div class="exp-head">
@@ -984,30 +975,23 @@ body{margin:0;background:var(--bg);color:var(--ink);
   if(!('serviceWorker' in navigator)) return;
   var refreshing=false;
 
-  function mostrarTarja(sw){
-    var upd=document.getElementById('upd');
-    if(!upd) return;
-    upd.classList.add('on');
-    document.getElementById('updBtn').onclick=function(){
-      upd.classList.remove('on');        // some imediatamente ao clicar
-      if(sw) sw.postMessage({type:'SKIP_WAITING'});
-    };
-    // rede de seguranca: some sozinha depois de 8s para nunca tapar os botoes
-    setTimeout(function(){ upd.classList.remove('on'); }, 8000);
+  function ativarNovo(sw){
+    // atualiza em silencio: manda o SW novo assumir, sem tarja nem botao
+    if(sw) sw.postMessage({type:'SKIP_WAITING'});
   }
 
   navigator.serviceWorker.register('sw.js').then(function(reg){
-    // 1) se JA existe um SW novo esperando (de uma visita anterior), oferece atualizar
+    // se ja existe um SW novo esperando, ativa direto
     if(reg.waiting && navigator.serviceWorker.controller){
-      mostrarTarja(reg.waiting);
+      ativarNovo(reg.waiting);
     }
-    // 2) quando um SW novo termina de instalar durante esta sessao
+    // quando um SW novo termina de instalar, ativa direto
     reg.addEventListener('updatefound',function(){
       var nw=reg.installing;
       if(!nw) return;
       nw.addEventListener('statechange',function(){
         if(nw.state==='installed' && navigator.serviceWorker.controller){
-          mostrarTarja(reg.waiting || nw);
+          ativarNovo(reg.waiting || nw);
         }
       });
     });
