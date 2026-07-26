@@ -64,6 +64,29 @@ DIÁRIO DE BORDO
   grupo. Cada aparelho exporta os relatos que tem. Juntando os
   quatro, você tem o diário completo dos 15 dias.
 
+
+NOVOS RECURSOS (v extras)
+  · Contagem regressiva na abertura ("faltam X dias") — vira "dia N
+    de 15" durante a viagem.
+  · Resumo do local em cada dia — um parágrafo sobre onde vocês estão.
+  · Atenção hoje — os alertas daquele dia (janela do Highland, fuso
+    navajo, tanque cheio) aparecem no próprio dia.
+  · Barra de ferramentas no topo:
+    - Conversor: dólar↔real (edite a cotação quando tiver sinal) e
+      calculadora de gorjeta (15/18/20%).
+    - Cofre: todas as confirmações, PINs e voos num lugar só, copiáveis.
+    - Emergência: 911, American Airlines, Caesars e Consulado — toque
+      para ligar. (Só números verificados; sem chutes.)
+  Tudo funciona offline.
+
+
+FUNDOS ILUSTRADOS
+  Cada dia tem uma silhueta temática atrás do cabeçalho: castelo
+  nos dias de Disney, escudo 66 e cacto na estrada, o paredão do
+  Grand Canyon, as buttes de Monument Valley, a Strip em Vegas, o
+  píer e as palmeiras em LA, avião nos dias de voo. Tudo desenhado
+  (SVG), pesa quase nada e funciona offline.
+
 DETALHES
   · O checklist e o diário são individuais de cada celular e não
     sincronizam entre os aparelhos — por isso a exportação no fim.
