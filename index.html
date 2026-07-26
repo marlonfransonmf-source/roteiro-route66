@@ -305,6 +305,32 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .setup button{width:100%;border:none;border-radius:.45rem;background:var(--c);color:#fff;padding:.55rem;
   font-size:.78rem;font-weight:700;font-family:inherit;cursor:pointer}
 .di-other .sync-tag{font-size:.58rem;color:var(--gray);font-weight:400}
+
+.exp-in{max-height:90vh}
+.exp-x{border:none;background:var(--line);color:var(--ink);width:1.9rem;height:1.9rem;
+  border-radius:50%;font-size:1rem;cursor:pointer;font-family:inherit}
+.exp-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;flex-wrap:wrap}
+.exp-head h3{margin:0;flex:1 0 auto}
+.exp-toggle{display:flex;gap:.3rem;background:var(--read-bg);border-radius:999px;padding:.2rem}
+.exp-toggle button{border:none;background:transparent;color:var(--gray);border-radius:999px;
+  padding:.3rem .7rem;font-size:.72rem;font-weight:700;font-family:inherit;cursor:pointer}
+.exp-toggle button.on{background:var(--ink);color:var(--bg)}
+.exp-scroll{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;margin:0 -.2rem;padding:0 .2rem}
+.jd-day{margin-bottom:1.1rem}
+.jd-day-h{position:sticky;top:0;background:var(--bg);padding:.3rem 0 .35rem;z-index:2}
+.jd-day-h b{font-family:'Fraunces',Georgia,serif;font-size:1rem;display:block}
+.jd-day-h span{font-size:.66rem;color:var(--gray);text-transform:uppercase;letter-spacing:.05em}
+.jd-person{margin-bottom:.55rem;padding-left:.7rem;border-left:2px solid var(--line)}
+.jd-person .who-name{font-size:.78rem;font-weight:700;color:var(--c);display:flex;align-items:center;gap:.4rem}
+.jd-person .stars-txt{color:#D9720A;font-size:.7rem;letter-spacing:1px}
+.jd-person p{margin:.15rem 0 0;font-size:.83rem;line-height:1.5;white-space:pre-wrap}
+.jd-person .extra{font-size:.68rem;color:var(--gray);margin-top:.2rem}
+.jd-empty{font-size:.78rem;color:var(--gray);font-style:italic;padding:.3rem 0 .3rem .7rem}
+.jd-none{text-align:center;color:var(--gray);font-size:.82rem;padding:2rem 1rem}
+.exp-actions{display:flex;gap:.5rem;margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--line)}
+.exp-actions button{flex:1;border-radius:.5rem;padding:.6rem;font-size:.78rem;font-weight:700;
+  font-family:inherit;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--ink)}
+.exp-actions .prim{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 </style>
 </head>
 <body>
@@ -792,14 +818,20 @@ body{margin:0;background:var(--bg);color:var(--ink);
 <div class="upd" id="upd"><div class="upd-in">
 <p>Nova versão do roteiro disponível.</p><button id="updBtn">Atualizar</button></div></div>
 <div class="exp" id="exp"><div class="exp-in">
-      <h3>Diário de bordo</h3>
-      <p class="sub">Relatos deste aparelho. Copie e mande no grupo — depois juntamos os quatro.</p>
-      <textarea class="exp-txt" id="expTxt" readonly></textarea>
-      <div class="exp-btns">
-        <button id="expClose">Fechar</button>
+      <button class="exp-x" id="expClose" style="float:right">×</button>
+      <div class="exp-head">
+        <h3>Diário da viagem</h3>
+        <div class="exp-toggle">
+          <button class="on" id="tgDia">Por dia</button>
+          <button id="tgPessoa">Por pessoa</button>
+        </div>
+      </div>
+      <div class="exp-scroll" id="expScroll"></div>
+      <div class="exp-actions">
         <button id="expShare">Compartilhar</button>
-        <button class="prim" id="expCopy">Copiar</button>
-      </div></div></div>
+        <button class="prim" id="expCopy">Copiar tudo</button>
+      </div>
+    </div></div>
 
 <div class="modal" id="mConv"><div class="modal-in">
   <button class="modal-close" data-close="mConv">×</button>
@@ -1100,6 +1132,64 @@ body{margin:0;background:var(--bg);color:var(--ink);
   });
 
   /* --- exportar --- */
+
+  var PESSOAS_ORD=['Jackson','Jo','Marlon','Bia'];
+  function estrelasTxt(n){ return n? '★'.repeat(n) : ''; }
+  function tituloDia(d){
+    var sec=document.querySelector('.day[data-day="'+d+'"]');
+    return { titulo: sec?sec.querySelector('h1').textContent:'Dia '+d,
+             dow: sec?sec.querySelector('.dow').textContent:'' };
+  }
+  function relatoDe(pessoa,d){
+    var x=(diario[pessoa]&&diario[pessoa][String(d)])||null;
+    if(!x || !(x.texto||x.momento||x.osmo||x.audio||x.nota)) return null;
+    return x;
+  }
+  function blocoPessoa(pessoa,x){
+    var h='<div class="jd-person"><div class="who-name">'+pessoa+
+          (x.nota?' <span class="stars-txt">'+estrelasTxt(x.nota)+'</span>':'')+'</div>';
+    if(x.texto)   h+='<p>'+x.texto.replace(/</g,'&lt;')+'</p>';
+    if(x.momento) h+='<div class="extra">✦ '+x.momento.replace(/</g,'&lt;')+'</div>';
+    var extra=[];
+    if(x.osmo)  extra.push('Osmo '+x.osmo);
+    if(x.audio) extra.push('Áudio: '+x.audio);
+    if(extra.length) h+='<div class="extra">'+extra.join(' · ')+'</div>';
+    h+='</div>';
+    return h;
+  }
+  function renderPorDia(){
+    var alvo=document.getElementById('expScroll'); var html=''; var houve=false;
+    for(var d=1; d<=15; d++){
+      var t=tituloDia(d);
+      var corpo=''; 
+      PESSOAS_ORD.forEach(function(p){ var x=relatoDe(p,d); if(x){ corpo+=blocoPessoa(p,x); houve=true; } });
+      if(!corpo) continue;
+      html+='<div class="jd-day"><div class="jd-day-h"><span>'+t.dow+'</span><b>Dia '+d+' · '+t.titulo+'</b></div>'+corpo+'</div>';
+    }
+    alvo.innerHTML = houve? html : '<div class="jd-none">Nenhum relato ainda.<br>Escreva no diário de cada dia — aparece aqui.</div>';
+  }
+  function renderPorPessoa(){
+    var alvo=document.getElementById('expScroll'); var html=''; var houve=false;
+    PESSOAS_ORD.forEach(function(p){
+      var corpo=''; var achou=false;
+      for(var d=1; d<=15; d++){
+        var x=relatoDe(p,d); if(!x) continue; achou=true; houve=true;
+        var t=tituloDia(d);
+        corpo+='<div class="jd-person"><div class="who-name">Dia '+d+
+               (x.nota?' <span class="stars-txt">'+estrelasTxt(x.nota)+'</span>':'')+'</div>';
+        if(x.texto)   corpo+='<p>'+x.texto.replace(/</g,'&lt;')+'</p>';
+        if(x.momento) corpo+='<div class="extra">✦ '+x.momento.replace(/</g,'&lt;')+'</div>';
+        var ex=[]; if(x.osmo)ex.push('Osmo '+x.osmo); if(x.audio)ex.push('Áudio: '+x.audio);
+        if(ex.length) corpo+='<div class="extra">'+ex.join(' · ')+'</div>';
+        corpo+='</div>';
+      }
+      if(achou) html+='<div class="jd-day"><div class="jd-day-h"><b>'+p+'</b></div>'+corpo+'</div>';
+    });
+    alvo.innerHTML = houve? html : '<div class="jd-none">Nenhum relato ainda.</div>';
+  }
+  var modoDia=true;
+  function renderDiario(){ if(modoDia) renderPorDia(); else renderPorPessoa(); }
+
   function montarTexto(){
     var L=['DIÁRIO DE BORDO · ROUTE 66 · FAMÍLIA VOLTAS','Set/2026',''];
     for(var d=1; d<=15; d++){
@@ -1130,20 +1220,26 @@ body{margin:0;background:var(--bg);color:var(--ink);
 
   var painel=document.getElementById('exp');
   document.getElementById('expBtn').onclick=function(){
-    document.getElementById('expTxt').value=montarTexto();
+    if(syncUrl && navigator.onLine){ baixar(); }  /* pega o mais recente antes de abrir */
+    renderDiario();
     painel.classList.add('on');
+  };
+  document.getElementById('tgDia').onclick=function(){
+    modoDia=true; this.classList.add('on'); document.getElementById('tgPessoa').classList.remove('on'); renderDiario();
+  };
+  document.getElementById('tgPessoa').onclick=function(){
+    modoDia=false; this.classList.add('on'); document.getElementById('tgDia').classList.remove('on'); renderDiario();
   };
   document.getElementById('expClose').onclick=function(){ painel.classList.remove('on'); };
   painel.onclick=function(e){ if(e.target===painel) painel.classList.remove('on'); };
 
   document.getElementById('expCopy').onclick=function(){
-    var t=document.getElementById('expTxt');
-    var v=t.value;
+    var v=montarTexto();
     if(navigator.clipboard){ navigator.clipboard.writeText(v).then(function(){ toast('Diário copiado'); }); }
-    else { t.select(); document.execCommand('copy'); toast('Diário copiado'); }
+    else { toast('Não consegui copiar'); }
   };
   document.getElementById('expShare').onclick=function(){
-    var v=document.getElementById('expTxt').value;
+    var v=montarTexto();
     if(navigator.share){ navigator.share({title:'Diário Route 66', text:v}).catch(function(){}); }
     else { toast('Use Copiar e cole no WhatsApp'); }
   };

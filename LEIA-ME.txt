@@ -60,9 +60,12 @@ DIÁRIO DE BORDO
   Escreve a qualquer hora, inclusive sem sinal. Salva sozinho ao
   sair do campo, mas o botão "Salvar meu relato" dá a confirmação.
 
-  No fim da viagem: botão "Diário ↗" no topo > Copiar > cola no
-  grupo. Cada aparelho exporta os relatos que tem. Juntando os
-  quatro, você tem o diário completo dos 15 dias.
+  Botão "Diário ↗" no topo: abre o DIÁRIO COMPLETO da viagem numa
+  tela só — todos os relatos de todos, do dia 1 ao 15, para rolar e
+  ler como um diário de verdade. Um botão alterna entre ver "por dia"
+  (todos juntos em cada dia) e "por pessoa" (o diário de cada um).
+  Ao abrir, ele busca os relatos mais recentes da família.
+  Botões "Copiar tudo" e "Compartilhar" exportam o diário inteiro.
 
 
 NOVOS RECURSOS (v extras)
