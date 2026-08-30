@@ -1,6 +1,6 @@
 /* Route 66 · Família Voltas — service worker
    Cache-first para o app, network-first silencioso para atualizar. */
-var CACHE = 'r66-repair-v1';
+var CACHE = 'r66-cupons-v1';
 var CORE = [
   './','./index.html','./manifest.webmanifest',
   './icon-192.png','./icon-512.png','./icon-mask.png','./apple-touch-icon.png'
