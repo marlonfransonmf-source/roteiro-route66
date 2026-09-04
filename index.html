@@ -1531,8 +1531,26 @@ body{margin:0;background:var(--bg);color:var(--ink);
   function abre(id){ document.getElementById(id).classList.add('on'); }
   function fecha(id){ document.getElementById(id).classList.remove('on'); }
   document.getElementById('tConv').onclick=function(){ abre('mConv'); };
-  document.getElementById('tCofre').onclick=function(){ montarCofre(); abre('mCofre'); };
+  document.getElementById('tCofre').onclick=function(){ pedirSenhaCofre(); };
   document.getElementById('tEmerg').onclick=function(){ montarEmergHotel(); abre('mEmerg'); };
+
+  /* ---------- SENHA DO COFRE ---------- */
+  var COFRE_SENHA='1414';
+  function cofreLiberado(){
+    try{ return sessionStorage.getItem('r66cofre')==='1'; }catch(e){ return false; }
+  }
+  function abrirCofreAgora(){ montarCofre(); abre('mCofre'); }
+  function pedirSenhaCofre(){
+    if(cofreLiberado()){ abrirCofreAgora(); return; }
+    var s=prompt('🔒 Cofre protegido.\nDigite a senha para ver as reservas e documentos:');
+    if(s===null) return; // cancelou
+    if(s.trim()===COFRE_SENHA){
+      try{ sessionStorage.setItem('r66cofre','1'); }catch(e){}
+      abrirCofreAgora();
+    } else {
+      alert('Senha incorreta.');
+    }
+  }
 
   /* ---------- ALBUM DE FOTOS ---------- */
   (function(){
